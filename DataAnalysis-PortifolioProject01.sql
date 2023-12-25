@@ -39,6 +39,15 @@ where continent is not null
 group by location,population
 order by 4 desc;
 
+-- Looking at countries with high infection rate per day
+
+select location,population, date, MAX(total_cases) as HighestInfectionCount, MAX(cast(total_cases as float)/cast(population as float))*100 as InfectedPopulationPercentage
+from PortifolioProject..CovidDeaths
+--where location like '%Kenya%'
+where continent is not null
+group by location,population, date
+order by InfectedPopulationPercentage desc;
+
 -- Showing Countries with the highest death count per population 
 
 select location,population, MAX(cast(total_deaths as float)) as HighestDeathCount, MAX(cast(total_deaths as float)/cast(population as float))*100 as DeathPopulationPercentage
