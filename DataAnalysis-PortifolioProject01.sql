@@ -58,6 +58,13 @@ where continent is not null
 group by continent
 order by 2 desc;
 
+-- Looking at total death counts
+
+select continent, SUM(new_deaths) as TotalDeathCount
+from PortifolioProject..CovidDeaths
+where continent is not null
+group by continent;
+
 -- GLOBAL NUMBERS --
 
 select  SUM(new_cases) as total_cases, SUM(new_deaths) as total_deaths, SUM(cast(new_deaths as float)) / Nullif( SUM(cast(new_cases as float)),0)*100 as DeathPercentage
@@ -160,3 +167,9 @@ join PortifolioProject..CovidVaccinations Vaccines
 on Deaths.location = Vaccines.location
 and Deaths.date = Vaccines.date
 where Deaths.continent is not null;
+
+create view TotalDeathCounts as
+select continent, SUM(new_deaths) as TotalDeathCount
+from PortifolioProject..CovidDeaths
+where continent is not null
+group by continent;
